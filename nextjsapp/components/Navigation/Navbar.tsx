@@ -21,7 +21,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
-import ToggleLayout from './ToggleLayout';
+import ToggleLayout from '@components/Navigation/ToggleLayout'
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
