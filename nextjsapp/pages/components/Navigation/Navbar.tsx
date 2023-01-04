@@ -21,6 +21,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import ToggleLayout from './ToggleLayout';
 
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -61,6 +62,10 @@ export default function WithSubnavigation() {
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
+        </Flex>
+
+        <Flex marginRight="2em">
+          <ToggleLayout />
         </Flex>
 
         <Stack
