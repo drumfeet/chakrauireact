@@ -17,9 +17,16 @@ export default function VolumeDaily() {
       Authorization: "9ad36ac3-00f0-4f75-bc2c-b075e000e41a",
     },
   };
+  interface ResponseData {
+    [key: string]: {
+      statistics: any;
+      one_day_volume: number;
+      seven_day_volume: number;
+      thirty_day_volume: number;
+    };
+  }
 
-  const [oneDayVolume, setOneDayVolume] = useState<number>();
-  const [statisticsData, setStatisticsData] = useState<any>();
+  const [data, setData] = useState<ResponseData>({});
 
   const apiUrl = "https://api.nftport.xyz/v0/transactions/stats/";
   const contract_addresses = [
@@ -29,17 +36,21 @@ export default function VolumeDaily() {
   const chain = "?chain=polygon";
 
   useEffect(() => {
-    //iterate and fetch through contract_addresses array
     contract_addresses.forEach((contract_address) => {
       fetch(apiUrl + contract_address + chain, options)
         .then((response) => response.json())
         .then((response) => {
-          setOneDayVolume(response.statistics.one_day_volume);
-          setStatisticsData(response.statistics);
+          //store response with 'contract_address' as key
+          setData((prevData) => ({
+            ...prevData,
+            [contract_address]: response,
+          }));
         })
         .catch((err) => console.error(err));
     });
   }, []);
+
+  console.log("drumfeet", data);
 
   return (
     <>
@@ -49,7 +60,9 @@ export default function VolumeDaily() {
             <Tr>
               <Th>TITLE</Th>
               <Th>CONTRACT</Th>
-              <Th>ONE DAY VOLUME</Th>
+              <Th>1 DAY VOLUME</Th>
+              <Th>7 DAY VOLUME</Th>
+              <Th>30 DAY VOLUME</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -57,7 +70,9 @@ export default function VolumeDaily() {
               <Tr key={address}>
                 <Td>test</Td>
                 <Td>{address}</Td>
-                <Td>{statisticsData?.one_day_volume}</Td>
+                <Td>{data[address]?.statistics?.one_day_volume}</Td>
+                <Td>{data[address]?.statistics?.seven_day_volume}</Td>
+                <Td>{data[address]?.statistics?.thirty_day_volume}</Td>
               </Tr>
             ))}
           </Tbody>
