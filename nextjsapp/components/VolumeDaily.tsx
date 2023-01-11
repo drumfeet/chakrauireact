@@ -10,6 +10,8 @@ import {
 import { useState, useEffect } from "react";
 
 export default function VolumeDaily() {
+  const [data, setData] = useState<any>({});
+
   const options = {
     method: "GET",
     headers: {
@@ -17,34 +19,30 @@ export default function VolumeDaily() {
       Authorization: "9ad36ac3-00f0-4f75-bc2c-b075e000e41a",
     },
   };
-  interface ResponseData {
-    [key: string]: {
-      statistics: any;
-      one_day_volume: number;
-      seven_day_volume: number;
-      thirty_day_volume: number;
-    };
-  }
 
-  const [data, setData] = useState<ResponseData>({});
-
-  const apiUrl = "https://api.nftport.xyz/v0/transactions/stats/";
-  const contract_addresses = [
-    "0x51Ac4A13054D5d7e1FA795439821484177e7E828",
-    "0xC7a096b4c6610ba3a836070333ff7922b9866a36",
-  ];
+  const apiUrlStats = "https://api.nftport.xyz/v0/transactions/stats/";
   const chain = "?chain=polygon";
+  const contract_addresses = [
+    // "0x77BD275fF2B3Dc007475aAC9Ce7F408F5A800188",
+    // "0x248ecb809cBe812EbdB09d75fA87E9CdF2F76030",
+    // "0xb70b8191F47E82E5d22b0a6224E0F11eb2e276DF",
+    // "0x51Ac4A13054D5d7e1FA795439821484177e7E828",
+    "0xC7a096b4c6610ba3a836070333ff7922b9866a36",
+    // "0x819e58E51d64AB05EfA132a133DE0aF5089954Cf",
+  ];
 
   useEffect(() => {
     contract_addresses.forEach((contract_address) => {
-      fetch(apiUrl + contract_address + chain, options)
+      fetch(apiUrlStats + contract_address + chain, options)
         .then((response) => response.json())
         .then((response) => {
-          //store response with 'contract_address' as key
-          setData((prevData) => ({
-            ...prevData,
-            [contract_address]: response,
-          }));
+          if (!data.hasOwnProperty(contract_address)) {
+            console.log("count");
+            setData((prevData: any) => ({
+              ...prevData,
+              [contract_address]: response,
+            }));
+          }
         })
         .catch((err) => console.error(err));
     });
@@ -63,16 +61,18 @@ export default function VolumeDaily() {
               <Th>1 DAY VOLUME</Th>
               <Th>7 DAY VOLUME</Th>
               <Th>30 DAY VOLUME</Th>
+              <Th>MARKET CAP</Th>
             </Tr>
           </Thead>
           <Tbody>
             {contract_addresses.map((address, index) => (
               <Tr key={address}>
-                <Td>test</Td>
+                <Td>AppTitleTest</Td>
                 <Td>{address}</Td>
                 <Td>{data[address]?.statistics?.one_day_volume}</Td>
                 <Td>{data[address]?.statistics?.seven_day_volume}</Td>
                 <Td>{data[address]?.statistics?.thirty_day_volume}</Td>
+                <Td>{data[address]?.statistics?.market_cap}</Td>
               </Tr>
             ))}
           </Tbody>
