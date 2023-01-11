@@ -8,45 +8,37 @@ import {
   Tbody,
   Td,
   Tfoot,
+  Box,
+  Container,
+  Flex,
 } from "@chakra-ui/react";
+import clsx from "clsx";
+import styles from "@styles/index.module.css";
 
 export default function AppsTable() {
   return (
     <>
-      <TableContainer>
-        <Table variant="simple">
-          <TableCaption>Imperial to metric conversion factors</TableCaption>
+      <TableContainer borderRadius="lg">
+        <Table variant="simple" size="sm">
           <Thead>
             <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
+              <Th>TITLE</Th>
+              <Th>CONTRACT</Th>
+              <Th>ADDRESS</Th>
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td>inches</Td>
-              <Td>millimetres (mm)</Td>
-              <Td isNumeric>25.4</Td>
+              <Td>R7SGd5uUedjOpix8Q4so:drumfeettitle</Td>
+              <Td>contractTxId=SbHG02aswwo06O4FtpcqyW1w882hu27y9hG8_1ONQg4</Td>
+              <Td>walletAddress=rk-IS2j0SF3sMAn49bsnOIHHpzOuEkYwYhuJgJbUEk8</Td>
             </Tr>
             <Tr>
-              <Td>feet</Td>
-              <Td>centimetres (cm)</Td>
-              <Td isNumeric>30.48</Td>
-            </Tr>
-            <Tr>
-              <Td>yards</Td>
-              <Td>metres (m)</Td>
-              <Td isNumeric>0.91444</Td>
+              <Td>iSjRL6ZRq4lqxF1GuEDe:drumfeet2</Td>
+              <Td>contractTxId=bZCZ_XLI0n_rwa_RjaEJ7fPK6pkQp_QDTSAV5t1Jh_k</Td>
+              <Td>walletAddress=s2tPMfp2006Oc751mWKeerl8Ki_ZGYXGfm1cAtrDv7Q</Td>
             </Tr>
           </Tbody>
-          <Tfoot>
-            <Tr>
-              <Th>To convert</Th>
-              <Th>into</Th>
-              <Th isNumeric>multiply by</Th>
-            </Tr>
-          </Tfoot>
         </Table>
       </TableContainer>
     </>
